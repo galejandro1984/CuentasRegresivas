@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva para Festividades</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .columna {
+            text-align: center;
+        }
+        .cuenta {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="columna">
+            <h2>Navidad</h2>
+            <div class="cuenta" id="cuenta-regresiva-navidad"></div>
+        </div>
+        <div class="columna">
+            <h2>Año Nuevo</h2>
+            <div class="cuenta" id="cuenta-regresiva-año-nuevo"></div>
+        </div>
+        <div class="columna">
+            <h2>Día de Reyes</h2>
+            <div class="cuenta" id="cuenta-regresiva-reyes"></div>
+        </div>
+    </div>
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v15.0" nonce="tu_nonce_aqui"></script>
+
+    <div class="fb-comments" data-href="URL_DE_TU_PAGINA" data-width="100%" data-numposts="5"></div>
+
+    <script>
+        // Función para calcular la diferencia entre dos fechas
+        function calcularTiempoRestante(fechaFin) {
+            const ahora = new Date();
+            const fin = new Date(fechaFin);
+            const diferencia = fin.getTime() - ahora.getTime();
+
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            return { dias, horas, minutos, segundos };
+        }
+
+        // Función para actualizar la cuenta regresiva
+        function actualizarCuentaRegresiva(id, fechaFin) {
+            const tiempoRestante = calcularTiempoRestante(fechaFin);
+            const elemento = document.getElementById(id);
+            elemento.innerHTML = `${tiempoRestante.dias}d ${tiempoRestante.horas}h ${tiempoRestante.minutos}m ${tiempoRestante.segundos}s`;
+        }
+
+        // Actualizar las cuentas regresivas cada segundo
+        setInterval(() => {
+            actualizarCuentaRegresiva("cuenta-regresiva-navidad", "2024-12-25");
+            actualizarCuentaRegresiva("cuenta-regresiva-año-nuevo", "2025-01-01");
+            actualizarCuentaRegresiva("cuenta-regresiva-reyes", "2025-01-06");
+        }, 1000);
+    </script>
+
+</body>
+</html>
